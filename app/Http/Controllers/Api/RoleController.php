@@ -11,7 +11,7 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::with('permissions')->get();
+        $roles = Role::with(['permissions'])->get();
         return response()->json([
             'success' => true,
             'data' => $roles
@@ -39,7 +39,7 @@ class RoleController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Peran berhasil ditambahkan',
-            'data' => $role->load('permissions')
+            'data' => $role->load(['permissions'])
         ]);
     }
 
@@ -70,7 +70,7 @@ class RoleController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Data peran berhasil diperbarui',
-            'data' => $role->load('permissions')
+            'data' => $role->load(['permissions'])
         ]);
     }
 

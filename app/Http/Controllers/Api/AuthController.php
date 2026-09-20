@@ -16,12 +16,17 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            if ($request->hasSession()) {
+                $request->session()->regenerate();
+            }
 
             $user = Auth::user()->load(['roles.permissions', 'roles.applications']);
+            
+            $token = $user->createToken('mobile-app')->plainTextToken;
 
             return response()->json([
                 'success' => true,
+                'data' => $token,
                 'user' => $user
             ]);
         }
@@ -35,8 +40,15 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        
+        if ($request->hasSession()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
+
+        if ($user = $request->user()) {
+            $user->currentAccessToken()?->delete();
+        }
 
         return response()->json(['success' => true, 'message' => 'Logged out']);
     }
@@ -45,7 +57,7 @@ class AuthController extends Controller
     {
         return response()->json([
             'success' => true,
-            'user' => $request->user()->load(['roles.permissions', 'roles.applications'])
+            'data' => $request->user()
         ]);
     }
 }

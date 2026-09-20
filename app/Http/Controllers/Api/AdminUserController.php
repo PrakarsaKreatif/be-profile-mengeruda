@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class AdminUserController extends Controller
 {
@@ -25,6 +27,8 @@ class AdminUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'nik' => 'nullable|string|max:16',
+            'phone' => 'nullable|string|max:20',
             'roles' => 'nullable|array',
             'roles.*' => 'exists:roles,id'
         ]);
@@ -33,11 +37,15 @@ class AdminUserController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'nik' => $validated['nik'] ?? null,
+            'phone' => $validated['phone'] ?? null,
         ]);
 
         if (isset($validated['roles'])) {
             $user->roles()->sync($validated['roles']);
         }
+
+        // Sync to SSO removed - using shared DB
 
         return response()->json([
             'success' => true,
@@ -57,12 +65,16 @@ class AdminUserController extends Controller
                 Rule::unique('users')->ignore($user->id)
             ],
             'password' => 'nullable|string|min:8',
+            'nik' => 'nullable|string|max:16',
+            'phone' => 'nullable|string|max:20',
             'roles' => 'nullable|array',
             'roles.*' => 'exists:roles,id'
         ]);
 
         $user->name = $validated['name'];
         $user->email = $validated['email'];
+        if (isset($validated['nik'])) $user->nik = $validated['nik'];
+        if (isset($validated['phone'])) $user->phone = $validated['phone'];
         
         if (!empty($validated['password'])) {
             $user->password = Hash::make($validated['password']);
@@ -76,9 +88,11 @@ class AdminUserController extends Controller
             $user->roles()->sync([]);
         }
 
+        // Sync to SSO removed - using shared DB
+
         return response()->json([
             'success' => true,
-            'message' => 'Data pengguna berhasil diperbarui',
+            'message' => 'Pengguna berhasil diperbarui',
             'data' => $user->load('roles')
         ]);
     }
@@ -97,9 +111,11 @@ class AdminUserController extends Controller
 
         $user->delete();
 
+        // Sync to SSO removed - using shared DB
+
         return response()->json([
             'success' => true,
-            'message' => 'Pengguna berhasil dihapus'
+            'message' => 'Data pengguna berhasil dihapus'
         ]);
     }
 }

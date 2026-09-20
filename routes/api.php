@@ -25,7 +25,7 @@ use App\Http\Controllers\Api\AuthController;
 
 // Rute Autentikasi Mandiri Profile Desa
 Route::post('/login', [AuthController::class, 'login']);
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth.jwt')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
 });
@@ -34,7 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/struktur-desa', [PerangkatDesaController::class, 'index']);
 
 // Struktur Desa (Admin - dilindungi auth/sanctum)
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth.jwt')->group(function () {
     Route::post('/struktur-desa', [PerangkatDesaController::class, 'store']);
     Route::post('/struktur-desa/{id}', [PerangkatDesaController::class, 'update']); // Pakai POST karena ada upload gambar (form-data)
     Route::delete('/struktur-desa/{id}', [PerangkatDesaController::class, 'destroy']);
@@ -84,8 +84,9 @@ Route::post('/demographic', [DemographicController::class, 'storeOrUpdate']);
 use App\Http\Controllers\Api\AdminUserController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\PermissionController;
+use App\Http\Controllers\Api\ApplicationController;
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth.jwt')->group(function () {
     // Manajemen Pengguna
     Route::get('/admin/users', [AdminUserController::class, 'index']);
     Route::post('/admin/users', [AdminUserController::class, 'store']);
@@ -98,8 +99,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/admin/roles/{id}', [RoleController::class, 'update']);
     Route::delete('/admin/roles/{id}', [RoleController::class, 'destroy']);
 
-    // Permissions
+    // Manajemen Hak Akses & Aplikasi
     Route::get('/admin/permissions', [PermissionController::class, 'index']);
+    Route::get('/admin/applications', [ApplicationController::class, 'index']);
 
     // Galeri Desa (Admin)
     Route::post('/galleries', [GalleryController::class, 'store']);

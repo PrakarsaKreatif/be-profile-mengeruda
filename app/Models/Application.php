@@ -11,8 +11,8 @@ class Application extends Model
 
     protected $fillable = ['name', 'url', 'description'];
 
-    public function roles()
+    public function permissions()
     {
-        return $this->belongsToMany(Role::class);
+        return $this->hasMany(Permission::class);
     }
 }

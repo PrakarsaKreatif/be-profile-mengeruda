@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Permission;
+use App\Models\Application;
 
-class PermissionController extends Controller
+class ApplicationController extends Controller
 {
     public function index()
     {
-        $permissions = Permission::with('application')->get();
+        $applications = Application::all();
         return response()->json([
             'success' => true,
-            'data' => $permissions
+            'data' => $applications
         ]);
     }
 }

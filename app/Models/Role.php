@@ -20,9 +20,4 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
-
-    public function applications()
-    {
-        return $this->belongsToMany(Application::class);
-    }
 }
