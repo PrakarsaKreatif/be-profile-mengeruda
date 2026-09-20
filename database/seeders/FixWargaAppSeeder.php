@@ -14,7 +14,8 @@ class FixWargaAppSeeder extends Seeder
         $app = Application::where('name', 'E-Surat')->first();
         
         if ($role && $app) {
-            $role->applications()->syncWithoutDetaching([$app->id]);
+            // Dihapus karena menggunakan arsitektur baru, relasi via permissions
+            // $role->applications()->syncWithoutDetaching([$app->id]);
         }
     }
 }

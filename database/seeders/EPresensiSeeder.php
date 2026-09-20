@@ -35,14 +35,12 @@ class EPresensiSeeder extends Seeder
             ['description' => 'Perangkat Desa Mengeruda']
         );
 
-        // 4. Assign App & Permission to Aparat Desa
-        $aparatRole->applications()->syncWithoutDetaching([$epresensiApp->id]);
+        // 4. Assign App & Permission to Aparat Desa (dihapus karena menggunakan arsitektur baru)
         
         // Optionally assign Super Admin to E-Presensi Application and Permission
         $superAdmin = Role::where('name', 'Super Admin')->first();
         if ($superAdmin) {
             $superAdmin->permissions()->syncWithoutDetaching([$permission->id]);
-            $superAdmin->applications()->syncWithoutDetaching([$epresensiApp->id]);
         }
     }
 }

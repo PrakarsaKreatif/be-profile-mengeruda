@@ -27,8 +27,7 @@ class DatabaseSeeder extends Seeder
             ['url' => 'http://localhost:5174', 'description' => 'Portal SSO Login']
         );
         
-        // Kaitkan role dengan aplikasi
-        $superAdminRole->applications()->syncWithoutDetaching([$ssoApp->id]);
+        // Kaitkan role dengan aplikasi (dihapus karena menggunakan arsitektur baru)
 
         // 3. Buat User Super Admin
         $admin = User::firstOrCreate(
@@ -48,6 +47,7 @@ class DatabaseSeeder extends Seeder
             TourismSeeder::class,
             EPresensiSeeder::class,
             LetterTemplateSeeder::class,
+            MapPermissionsToApplicationsSeeder::class,
         ]);
     }
 }
