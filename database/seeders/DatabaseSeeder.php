@@ -44,9 +44,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RbacSeeder::class,
             ESuratRoleSeeder::class,
-            TourismSeeder::class,
             EPresensiSeeder::class,
-            LetterTemplateSeeder::class,
             MapPermissionsToApplicationsSeeder::class,
         ]);
     }
