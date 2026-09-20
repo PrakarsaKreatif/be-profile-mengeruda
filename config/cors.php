@@ -34,7 +34,7 @@ return [
         'http://127.0.0.1:3000',
         'http://127.0.0.1:3002',
         'http://127.0.0.1:3003',
-        'https://sso.mengeruda.id', 
+        'https://sso.mengeruda.id',
         'https://mengeruda.id',
         'https://www.mengeruda.id',
         'http://mengeruda.id',
