@@ -15,10 +15,10 @@ class EPresensiSeeder extends Seeder
     public function run(): void
     {
         // 1. Create Application for E-Presensi if not exists
-        $epresensiApp = Application::firstOrCreate(
+        $epresensiApp = Application::updateOrCreate(
             ['name' => 'E-Presensi'],
             [
-                'url' => 'http://localhost:5178/auth-receiver',
+                'url' => env('EPRESENSI_APP_URL', 'https://e-presensi.mengeruda.id') . '/auth-receiver',
                 'description' => 'Sistem absensi digital berbasis lokasi untuk aparat desa.'
             ]
         );

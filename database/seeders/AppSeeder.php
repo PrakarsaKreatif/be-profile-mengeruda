@@ -15,23 +15,23 @@ class AppSeeder extends Seeder
         $apps = [
             [
                 'name' => 'Profile Website',
-                'url' => 'http://localhost:5174/auth-receiver',
+                'url' => env('PROFILE_APP_URL', 'https://mengeruda.id') . '/auth-receiver',
                 'description' => 'Manajemen konten profil dan informasi pemerintahan desa.'
             ],
             [
                 'name' => 'Tourism',
-                'url' => 'http://localhost:5175/auth-receiver',
+                'url' => env('TOURISM_APP_URL', 'https://tourism.mengeruda.id') . '/auth-receiver',
                 'description' => 'Manajemen objek wisata, agenda, umkm, dan berita.'
             ],
             [
                 'name' => 'E-Surat',
-                'url' => 'http://localhost:5177/auth-receiver',
+                'url' => env('ESURAT_APP_URL', 'https://e-surat.mengeruda.id') . '/auth-receiver',
                 'description' => 'Sistem pelayanan administrasi dan persuratan desa.'
             ]
         ];
 
         foreach ($apps as $app) {
-            Application::firstOrCreate(
+            \App\Models\Application::updateOrCreate(
                 ['name' => $app['name']],
                 [
                     'url' => $app['url'],
