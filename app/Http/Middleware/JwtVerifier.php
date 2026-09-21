@@ -64,10 +64,11 @@ class JwtVerifier
             // Authenticate the virtual user for this request
             Auth::setUser($user);
 
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             return response()->json([
-                'message' => 'Invalid token.',
-                'error' => $e->getMessage()
+                'message' => 'Invalid token or server error.',
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
             ], 401);
         }
 
