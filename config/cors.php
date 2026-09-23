@@ -42,6 +42,8 @@ return [
         'https://tourism.mengeruda.id',
         'https://e-surat.mengeruda.id',
         'http://e-surat.mengeruda.id',
+        'https://e-presensi.mengeruda.id',
+        'http://e-presensi.mengeruda.id',
     ],
 
     'allowed_origins_patterns' => [
